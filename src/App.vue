@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 600px; width: 500px;">
+  <div>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <AriportsMap msg="Welcome to Your Vue.js App"/>
   </div>

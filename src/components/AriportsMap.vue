@@ -1,27 +1,55 @@
 <template>
+<div class="container">
 
-<div style="height: 500px; width: 400px;">
-  <h3>Peruvian Airports</h3>
-  <l-map :options="mapOptions" :zoom="5" :center="[-9.1900, -75.0152]" style="width: 100%; height: 400px; ">
-    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-    
-    <!-- Agregar marcadores -->
-    <!-- <l-marker :lat-lng="[-12.0464, -77.0428]">
-      <l-popup>
-        Este es el mensaje que se muestra cuando haces clic en el marcador en Juliaca.
-      </l-popup>
-    </l-marker>  -->
-    <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
+  <div class="row">
+    <div class="col-6">
+      <div>
+        <h3 class="text-center">Peruvian Airports</h3>
+        <l-map :options="mapOptions" :zoom="5" :center="[-9.1900, -75.0152]">
+          <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+          
+          <!-- Agregar marcadores -->
+          <!-- <l-marker :lat-lng="[-12.0464, -77.0428]">
+            <l-popup>
+              Este es el mensaje que se muestra cuando haces clic en el marcador en Juliaca.
+            </l-popup>
+          </l-marker>  -->
+          <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
 
-    <l-marker :lat-lng="[-15.470319163106165, -70.15666099196471]">
-      <l-popup>
-        JULIACA AIRPORT: INCA MANCO CAPAC AIRPORT
-      </l-popup>
-    </l-marker>
+          <l-marker :lat-lng="[-15.470319163106165, -70.15666099196471]">
+            <l-popup>
+              JULIACA AIRPORT: INCA MANCO CAPAC AIRPORT
+            </l-popup>
+          </l-marker>
 
-    <!-- Agrega más marcadores según sea necesario -->
-  </l-map>
-  <button @click="fetchData()">axios test</button>
+          <!-- Agrega más marcadores según sea necesario -->
+        </l-map>
+      </div>
+      
+      <div class="row">
+        <div class="col-4">
+          <button class="btn btn-primary" @click="fetchData()">axios test</button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-info" @click="fetchData()">axios test</button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-danger" @click="fetchData()">axios test</button>
+        </div>
+        
+      </div>
+      
+    </div>
+    <div class="col-6">
+      <div>
+        <h3>Information</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis, culpa facilis! Unde omnis fuga corporis dolores cupiditate, enim assumenda alias id aspernatur laudantium neque quibusdam eaque blanditiis veniam est repellat.
+        </p>
+      </div>
+    </div>
+  </div>
+
 </div>
 </template>
 
