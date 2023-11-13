@@ -7,28 +7,30 @@
 
     <div class="row mb-4">
       <div class="col-6">
-        <div style="height: 500px;">
+        <div style="height: auto; background: #F4F1E9;">
           <h3 class="text-center">Peruvian Airports Map</h3>
-          <l-map :options="mapOptions" :zoom="5" :center="[-9.1900, -75.0152]">
-            <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+          <div class="map-content">
+            <l-map :options="mapOptions" :zoom="5" :center="[-9.1900, -75.0152]">
+              <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
 
-            <!-- Agregar marcadores -->
-            <!-- <l-marker :lat-lng="[-12.0464, -77.0428]">
-            <l-popup>
-              Este es el mensaje que se muestra cuando haces clic en el marcador en Juliaca.
-            </l-popup>
-          </l-marker>  -->
-            <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
-
-            <l-marker :lat-lng="[-15.470319163106165, -70.15666099196471]"
-              @click="handleMarkerClick('JULIACA AIRPORT: INCA MANCO CAPAC AIRPORT')">
+              <!-- Agregar marcadores -->
+              <!-- <l-marker :lat-lng="[-12.0464, -77.0428]">
               <l-popup>
-                JULIACA AIRPORT: INCA MANCO CAPAC AIRPORT
+                Este es el mensaje que se muestra cuando haces clic en el marcador en Juliaca.
               </l-popup>
-            </l-marker>
+            </l-marker>  -->
+              <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
 
-            <!-- Agrega más marcadores según sea necesario -->
-          </l-map>
+              <l-marker :lat-lng="[-15.470319163106165, -70.15666099196471]"
+                @click="handleMarkerClick('JULIACA AIRPORT: INCA MANCO CAPAC AIRPORT')">
+                <l-popup>
+                  JULIACA AIRPORT: INCA MANCO CAPAC AIRPORT
+                </l-popup>
+              </l-marker>
+
+              <!-- Agrega más marcadores según sea necesario -->
+            </l-map>
+          </div>
         </div>
 
       </div>
@@ -39,22 +41,42 @@
               <button class="btn btn-primary" @click="resetInfo()">RESET</button>
             </div>
             <div class="col-4">
-              <button class="btn btn-info" @click="fetchData()">OPEN IN MAPS</button>
+              <button class="btn btn-info" @click="toggleInfoSection()">OPEN IN MAPS</button>
             </div>
             <div class="col-4">
               <button class="btn btn-danger" @click="fetchData()">axios test</button>
             </div>
 
           </div>
-          <h3>Information</h3>
-          <section style="background: lightcyan; padding: 2rem;">
+          <section style="background: lightcyan; padding: 2rem;" v-if="showCurrentInfo">
+            <h3>Information</h3>
             <p v-if="selectedAirportInfo !== ''">{{ selectedAirportInfo }}</p>
             <img v-else src="" alt="no selected optin info">
+          </section>
+
+          <section v-else>
+            <ModalCreateLocation/>
           </section>
 
         </div>
       </div>
     </div>
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <p class="col-md-4 mb-0 text-muted">&copy; 2023 conti, Inc</p>
+
+      <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      </a>
+
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+      </ul>
+    </footer>
 
   </div>
 </template>
@@ -63,11 +85,21 @@
 
 import axios from 'axios';
 
+import ModalCreateLocation from '@/components/ModalCreateLocation.vue'
+
 
 export default {
 
+  components:{
+    ModalCreateLocation,
+  },
+
   data() {
     return {
+
+      // showModalCreateLocation: false,
+      showCurrentInfo: true,
+
       mapOptions: {
         dragging: false, // Desactiva el movimiento del mapa
         zoomControl: false, // Desactiva el control de zoom
@@ -84,6 +116,10 @@ export default {
     }
   },
   methods: {
+
+    toggleInfoSection() {
+      this.showCurrentInfo = !this.showCurrentInfo;
+    },
 
     handleMarkerClick(airportInfo) {
       this.selectedAirportInfo = airportInfo;
@@ -108,7 +144,23 @@ export default {
           // Maneja el error aquí
           console.error(error);
         });
-    }
+    },
+
+    //openModalCreateLocation(){
+    //  this.showModalCreateLocation = true
+    //}
   }
 };
 </script>
+
+<style scoped>
+
+.map-content{
+  margin: 20px; 
+  padding: 20px; 
+  background: #c1beb7; 
+  border-radius: 17px; 
+  height: 500px;
+}
+
+</style>
