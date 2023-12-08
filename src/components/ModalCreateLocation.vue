@@ -75,7 +75,7 @@ export default {
         console.log("Form data ",this.form)
 
         // Hacer una petición POST con datos en formato JSON
-        axios.post('http://127.0.0.1:3000/airports', this.form, {
+        axios.post('http://127.0.0.1:3000/airport_locations', this.form, {
           headers: {
             'Content-Type': 'application/json',
           },

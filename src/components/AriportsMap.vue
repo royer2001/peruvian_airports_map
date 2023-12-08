@@ -42,7 +42,7 @@
                 <button class="btn btn-primary" @click="resetInfo()">RESET</button>
               </div>
               <div class="col-4">
-                <button class="btn btn-info" @click="toggleInfoSection()">OPEN IN MAPS</button>
+                <button :class="showCurrentInfo ? 'btn btn-info' : 'btn btn-success' " @click="toggleInfoSection()">{{showCurrentInfo ? 'info' : 'create'}}</button>
               </div>
               <div class="col-4">
                 <button class="btn btn-danger" @click="fetchData()">axios test</button>
@@ -51,7 +51,7 @@
             </div>
             <section style="background: lightcyan; padding: 2rem;" v-if="showCurrentInfo">
               <h3>Information</h3>
-              <div v-if="selectedAirportInfo !== ''">
+              <div v-if="selectedAirportInfo">
                 <p>{{ selectedAirportInfo }}</p>
                 <l-map :options="mapOptions" :zoom="zoom" :center="[latitude, longitud]">
                   <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -72,24 +72,7 @@
     </div>
     
     <div class="container">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
-
-        <a href="/"
-          class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-          <svg class="bi me-2" width="40" height="32">
-            <use xlink:href="#bootstrap" />
-          </svg>
-        </a>
-
-        <ul class="nav col-md-4 justify-content-end">
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-        </ul>
-      </footer>
+      <FooterSection/>
     </div>
   </div>
 </template>
@@ -99,12 +82,13 @@
 import axios from 'axios';
 
 import ModalCreateLocation from '@/components/ModalCreateLocation.vue'
-
+import FooterSection from '@/components/FooterSection.vue'
 
 export default {
 
   components: {
     ModalCreateLocation,
+    FooterSection,
   },
 
   data() {
@@ -198,6 +182,10 @@ export default {
           console.error(error);
         });
     },
+
+    getLocations(){
+      // TODO: get all locations
+    }
 
     //openModalCreateLocation(){
     //  this.showModalCreateLocation = true
