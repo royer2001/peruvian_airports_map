@@ -1,14 +1,8 @@
 <template>
-<<<<<<< HEAD
-  <div class="container">
-    <div class="my-4 p-5 bg-info text-white rounded">
-=======
   <div>
-    <div class="m-2 p-5 bg-primary text-white rounded">
->>>>>>> f793d7ac3c7d9f556bbd8c07c70619c81ab911e6
-      <h1>{{ headerPresentation.title }}</h1>
-      <p>{{ headerPresentation.description }}</p>
-    </div>
+
+    <PresentationSection />
+
 
     <div class="container-fluid">
       <div class="row mb-4">
@@ -29,7 +23,7 @@
 
                 <l-marker v-for="(airport, index) in airports" :key="index"
                   :lat-lng="[parseFloat(airport.latitude), parseFloat(airport.longitud)]"
-                  @click="handleMarkerClick(airport.name)">
+                  @click="handleMarkerClick(airport)">
                   <l-popup>
                     {{ airport.name }}
                   </l-popup>
@@ -47,7 +41,8 @@
                 <button class="btn btn-primary" @click="resetInfo()">RESET</button>
               </div>
               <div class="col-4">
-                <button :class="showCurrentInfo ? 'btn btn-info' : 'btn btn-success' " @click="toggleInfoSection()">{{showCurrentInfo ? 'info' : 'create'}}</button>
+                <button :class="showCurrentInfo ? 'btn btn-info' : 'btn btn-success'" @click="toggleInfoSection()">{{
+                  showCurrentInfo ? 'info' : 'create' }}</button>
               </div>
               <div class="col-4">
                 <button class="btn btn-danger" @click="fetchData()">axios test</button>
@@ -56,9 +51,10 @@
             </div>
             <section style="background: lightcyan; padding: 2rem;" v-if="showCurrentInfo">
               <h3>Information</h3>
-              <div v-if="selectedAirportInfo">
+              <div v-if="selectedAirportInfo" style="height: 300px; width: 300px;">
                 <p>{{ selectedAirportInfo }}</p>
-                <l-map :options="mapOptions" :zoom="zoom" :center="[latitude, longitud]">
+                {{ selectedLatitude + " " + selectedLongitud }}
+                <l-map  :key="mapKey"  :options="mapOptions" :zoom="12" :center="[selectedLatitude,selectedLongitud]">
                   <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
                   <!-- Agrega más marcadores según sea necesario -->
                 </l-map>
@@ -75,20 +71,9 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-
-    <div class="row my-4">
-      <div class="col-12">
-        <h1>end section</h1>
-      </div>
-    </div>
-
-=======
-    
     <div class="container">
-      <FooterSection/>
+      <FooterSection />
     </div>
->>>>>>> f793d7ac3c7d9f556bbd8c07c70619c81ab911e6
   </div>
 </template>
 
@@ -98,20 +83,36 @@ import axios from 'axios';
 
 import ModalCreateLocation from '@/components/ModalCreateLocation.vue'
 import FooterSection from '@/components/FooterSection.vue'
+import PresentationSection from '@/components/PresentationSection.vue'
 
 export default {
 
   components: {
     ModalCreateLocation,
     FooterSection,
+    PresentationSection
+  },
+
+  computed: {
+    mapCenter() {
+      // Use the selected marker coordinates if available, otherwise use default coordinates
+      return this.selectedLatitude && this.selectedLongitud
+        ? [parseFloat(this.selectedLatitude), parseFloat(this.selectedLongitud)]
+        : [this.latitude, this.longitud];
+    },
   },
 
   data() {
     return {
 
+      mapKey: 0,
+
       zoom: 5,
       latitude: -9.1900,
       longitud: -75.0152,
+
+      selectedLatitude: null,
+      selectedLongitud: null,
 
       // showModalCreateLocation: false,
       showCurrentInfo: true,
@@ -120,11 +121,6 @@ export default {
         dragging: false, // Desactiva el movimiento del mapa
         zoomControl: false, // Desactiva el control de zoom
         scrollWheelZoom: false,
-      },
-
-      headerPresentation: {
-        title: 'PERUVIAN AIRPORTS',
-        description: 'Learn about Peru airports.',
       },
 
       selectedAirportInfo: '',
@@ -145,12 +141,13 @@ export default {
           city: 'Cusco'
         },
         {
-          longitud: '-70.158169',
-          latitude: '-17.631611',
+          longitud: '-71.568009',
+          latitude: '-16.342920',
           code: 'AQP',
           name: 'Aeropuerto Internacional Rodríguez Ballón',
           city: 'Arequipa'
         },
+
         {
           longitud: '-70.15707',
           latitude: '-15.46751',
@@ -162,14 +159,24 @@ export default {
       ]
     }
   },
+
+
   methods: {
+
+    refreshMap() {
+      this.mapKey += 1;
+    },
 
     toggleInfoSection() {
       this.showCurrentInfo = !this.showCurrentInfo;
     },
 
     handleMarkerClick(airportInfo) {
-      this.selectedAirportInfo = airportInfo;
+      this.selectedAirportInfo = airportInfo.name;
+      this.selectedLatitude = airportInfo.latitude;
+      this.selectedLongitud = airportInfo.longitud;
+      this.refreshMap()
+
     },
 
     disableScroll(event) {
@@ -198,7 +205,7 @@ export default {
         });
     },
 
-    getLocations(){
+    getLocations() {
       // TODO: get all locations
     }
 
@@ -216,4 +223,5 @@ export default {
   background: #c1beb7;
   border-radius: 17px;
   height: 500px;
-}</style>
+}
+</style>
