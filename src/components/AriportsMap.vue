@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="my-4 p-5 bg-primary text-white rounded">
+    <div class="my-4 p-5 bg-info text-white rounded">
       <h1>{{ headerPresentation.title }}</h1>
       <p>{{ headerPresentation.description }}</p>
     </div>
@@ -53,6 +53,12 @@
           </section>
 
         </div>
+      </div>
+    </div>
+
+    <div class="row my-4">
+      <div class="col-12">
+        <h1>end section</h1>
       </div>
     </div>
 
