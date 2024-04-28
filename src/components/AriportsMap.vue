@@ -7,8 +7,8 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-6">
-          <div style="height: auto; background: #F4F1E9; border: 1px solid red;">
-            <h3 class="text-center">Peruvian Airports Map</h3>
+          <div class="card-map">
+            <h3 class="text-center">PERUVIAN AIRPORTS MAP</h3>
             <div class="map-content">
               <l-map :options="mapOptions" :zoom="zoom" :center="[latitude, longitud]">
                 <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -21,9 +21,9 @@
             </l-marker>  -->
                 <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
 
-                <l-marker v-for="({ latitude, longitud, airport_name }, index) in airports" :key="index"
+                <l-marker v-for="({ latitude, longitud, airport_name, icao }, index) in airports" :key="index"
                   :lat-lng="[parseFloat(latitude), parseFloat(longitud)]"
-                  @click="handleMarkerClick(latitude, longitud, airport_name)">
+                  @click="handleMarkerClick(icao)">
                   <l-popup>
                     {{ airport_name }}
                   </l-popup>
@@ -35,29 +35,29 @@
 
         </div>
         <div class="col-6">
-          <div
-            style="background: lightcyan; height: 100%; border: 1px solid red; display: flex; flex-direction: column;"
-            v-if="showCurrentInfo">
-            <div style="margin: 10px;">
-              <h3>Information</h3>
-            </div>
+          <div class="card-info" v-if="showCurrentInfo">
+            <h3 class="text-center">INFORMATION</h3>
+
             <div style="flex: 1; display: flex;">
               <div v-if="selectedAirportInfo" style="flex: 1; display: flex; flex-direction: column;">
 
-                <div style="margin: 10px;">
-                  <p>{{ selectedAirportInfo }}</p>
-                  <p>latitude: {{ selectedLatitude }}</p>
-                  <p>longitud: {{ selectedLongitud }}</p>
+                <div v-for="airport, index in selectedAirportInfo" :key="index" class="m-2" style="font-size: small; display: flex; flex-direction: column">
+                  <label>
+                    {{ airport }}
+                  </label>
                 </div>
 
                 <div style="flex: 1;">
-                  <l-map :key="mapKey" :options="mapOptions" :zoom="15" :center="[selectedLatitude, selectedLongitud]">
+                  <l-map :key="mapKey" :options="mapOptions" :zoom="15" :center="[selectedAirportInfo.latitude_deg, selectedAirportInfo.longitude_deg]">
                     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
                     <!-- Agrega más marcadores según sea necesario -->
                   </l-map>
                 </div>
               </div>
-              <img v-else src="" alt="no selected option info" style="flex: 1;">
+              <div v-else class="d-flex justify-content-center align-items-center" style="flex: 1;">
+                <img src="@/assets/location.svg" height="50" alt="no selected option info">
+                <p class="m-0">No location selected</p>
+              </div>
             </div>
           </div>
 
@@ -77,6 +77,9 @@ import axios from 'axios';
 
 import FooterSection from '@/components/FooterSection.vue'
 import PresentationSection from '@/components/PresentationSection.vue'
+
+import airportInfoApi from '@/services/airports.services.js'
+
 
 export default {
 
@@ -337,10 +340,24 @@ export default {
       this.showCurrentInfo = !this.showCurrentInfo;
     },
 
-    handleMarkerClick(latitude, longitud, name) {
-      this.selectedAirportInfo = name;
-      this.selectedLatitude = latitude;
-      this.selectedLongitud = longitud;
+    async handleMarkerClick(icao) {
+      //      console.log(process.env.VUE_APP_AIRPORTDB_API_KEY)
+      //, icao
+      // const endpoint = `/${ICAO}?apiToken=${process.AIRPORTDB_API_KEY}`
+      const endpoint = `/${icao}?apiToken=${process.env.VUE_APP_AIRPORTDB_API_KEY}`
+
+      const { data } = await airportInfoApi.get(endpoint)
+
+      const { municipality, name, latitude_deg, longitude_deg, iso_country, iso_region } = data
+
+      this.selectedAirportInfo = {
+        municipality, 
+        name, 
+        latitude_deg, 
+        longitude_deg, 
+        iso_country, 
+        iso_region
+      }
       this.refreshMap()
 
     },
@@ -351,7 +368,7 @@ export default {
     },
 
     resetInfo() {
-      this.selectedAirportInfo = "";
+      this.selectedAirportInfo = {};
       this.zoom = 5
       this.latitude = -9.1900
       this.longitud = -75.0152
@@ -387,5 +404,20 @@ export default {
   background: #b7bac1;
   border-radius: 17px;
   height: 500px;
+}
+
+.card-map {
+  border: 0px;
+  border-radius: 7px;
+  height: auto;
+  background: #F4F1E9;
+}
+
+.card-info {
+  background: lightgreen;
+  border-radius: 7px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>
