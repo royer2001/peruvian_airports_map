@@ -1,11 +1,7 @@
 <template>
   <div>
-
     <PreLoader :isLoading="isLoading"></PreLoader>
-
     <PresentationSection />
-
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6 col-sm-12 mb-3">
@@ -14,55 +10,26 @@
             <div class="map-content">
               <l-map :options="mapOptions" :zoom="zoom" :center="[latitude, longitud]">
                 <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-
-                <!-- Agregar marcadores -->
-                <!-- <l-marker :lat-lng="[-12.0464, -77.0428]">
-              <l-popup>
-                Este es el mensaje que se muestra cuando haces clic en el marcador en Juliaca.
-              </l-popup>
-            </l-marker>  -->
-                <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
-
                 <l-marker v-for="({ latitude, longitud, airport_name, icao }, index) in airports" :key="index"
                   :lat-lng="[parseFloat(latitude), parseFloat(longitud)]" @click="handleMarkerClick(icao)">
-                  <l-popup>
-                    {{ airport_name }}
-                  </l-popup>
+                  <l-popup>{{ airport_name }}</l-popup>
                 </l-marker>
-                <!-- Agrega más marcadores según sea necesario -->
               </l-map>
             </div>
           </div>
-
         </div>
         <div class="col-md-6 col-sm-12">
           <div class="card-info" v-if="showCurrentInfo">
-
             <div style="flex: 1; display: flex;">
-
               <div v-if="selectedAirportInfo" style="flex: 1; display: flex; flex-direction: column;">
-
-                <div style="flex: 1;">
+                <div class="map-details">
                   <l-map :key="mapKey" :options="mapOptions" :zoom="15"
                     :center="[selectedAirportInfo.latitude_deg, selectedAirportInfo.longitude_deg]">
                     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
-                    <!-- Agrega más marcadores según sea necesario -->
                   </l-map>
                 </div>
-
-                <h3 class="m-2">INFO::</h3>
-
-                <div v-for="airport, index in selectedAirportInfo" :key="index" class="airport-info m-2"
-                  style="font-size: small; display: flex; flex-direction: column">
-                  <label>
-                    {{ airport }}
-                  </label>
-
-                </div>
-
-
-                <div class="d-grid gap-2 d-md-block m-2">
-                  <button class="btn btn-outline-success" type="button">View in maps</button>
+                <div>
+                  <CardInformation :selectedAirport="selectedAirportInfo" />
                 </div>
               </div>
               <div v-else class="d-flex justify-content-center align-items-center py-3" style="flex: 1;">
@@ -71,8 +38,6 @@
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -82,13 +47,13 @@
   </div>
 </template>
 
-<script>
 
-import axios from 'axios';
+<script>
 
 import FooterSection from '@/components/FooterSection.vue'
 import PresentationSection from '@/components/PresentationSection.vue'
 import PreLoader from '@/components/PreLoader.vue'
+import CardInformation from '@/components/CardInformation.vue'
 
 import airportInfoApi from '@/services/airports.services.js'
 
@@ -99,7 +64,8 @@ export default {
   components: {
     FooterSection,
     PresentationSection,
-    PreLoader
+    PreLoader,
+    CardInformation,
   },
 
   computed: {
@@ -191,25 +157,9 @@ export default {
       console.log(this.zoom, this.latitude, this.longitud)
     },
 
-    fetchData() {
-      axios.get('https://jsonplaceholder.typicode.com/posts')
-        .then(response => {
-          // Maneja la respuesta aquí
-          console.log(response.data); // Ejemplo: Imprimir la respuesta en la consola
-        })
-        .catch(error => {
-          // Maneja el error aquí
-          console.error(error);
-        });
-    },
-
     getLocations() {
       // TODO: get all locations
     }
-
-    //openModalCreateLocation(){
-    //  this.showModalCreateLocation = true
-    //}
   }
 };
 </script>
@@ -240,5 +190,28 @@ export default {
   font-size: small;
   display: flex;
   flex-direction: column;
+}
+
+.map-details {
+  flex: 1;
+  height: 50%; 
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Adaptaciones para móviles y tablets */
+@media (max-width: 768px) {
+  .card-map, .card-info {
+    margin-bottom: 20px;
+  }
+
+  .map-content {
+    height: 500px; /* Ajusta la altura para dispositivos móviles */
+  }
+
+  .map-details {
+    height: 500px; /* Ajusta la altura para dispositivos móviles */
+  }
 }
 </style>
