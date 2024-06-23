@@ -1,14 +1,16 @@
 <template>
   <div>
 
+    <PreLoader :isLoading="isLoading"></PreLoader>
+
     <PresentationSection />
 
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12 mb-3">
           <div class="card-map">
-            <h3 class="text-center">PERUVIAN AIRPORTS MAP</h3>
+            <h3 class="text-center">AIRPORT MAP</h3>
             <div class="map-content">
               <l-map :options="mapOptions" :zoom="zoom" :center="[latitude, longitud]">
                 <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -22,8 +24,7 @@
                 <!-- <l-marker :lat-lng="[13.6918, -89.2248]"></l-marker> -->
 
                 <l-marker v-for="({ latitude, longitud, airport_name, icao }, index) in airports" :key="index"
-                  :lat-lng="[parseFloat(latitude), parseFloat(longitud)]"
-                  @click="handleMarkerClick(icao)">
+                  :lat-lng="[parseFloat(latitude), parseFloat(longitud)]" @click="handleMarkerClick(icao)">
                   <l-popup>
                     {{ airport_name }}
                   </l-popup>
@@ -34,28 +35,38 @@
           </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
           <div class="card-info" v-if="showCurrentInfo">
-            <h3 class="text-center">INFORMATION</h3>
 
             <div style="flex: 1; display: flex;">
+
               <div v-if="selectedAirportInfo" style="flex: 1; display: flex; flex-direction: column;">
 
-                <div v-for="airport, index in selectedAirportInfo" :key="index" class="m-2" style="font-size: small; display: flex; flex-direction: column">
-                  <label>
-                    {{ airport }}
-                  </label>
-                </div>
-
                 <div style="flex: 1;">
-                  <l-map :key="mapKey" :options="mapOptions" :zoom="15" :center="[selectedAirportInfo.latitude_deg, selectedAirportInfo.longitude_deg]">
+                  <l-map :key="mapKey" :options="mapOptions" :zoom="15"
+                    :center="[selectedAirportInfo.latitude_deg, selectedAirportInfo.longitude_deg]">
                     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
                     <!-- Agrega más marcadores según sea necesario -->
                   </l-map>
                 </div>
+
+                <h3 class="m-2">INFO::</h3>
+
+                <div v-for="airport, index in selectedAirportInfo" :key="index" class="airport-info m-2"
+                  style="font-size: small; display: flex; flex-direction: column">
+                  <label>
+                    {{ airport }}
+                  </label>
+
+                </div>
+
+
+                <div class="d-grid gap-2 d-md-block m-2">
+                  <button class="btn btn-outline-success" type="button">View in maps</button>
+                </div>
               </div>
-              <div v-else class="d-flex justify-content-center align-items-center" style="flex: 1;">
-                <img src="@/assets/location.svg" height="50" alt="no selected option info">
+              <div v-else class="d-flex justify-content-center align-items-center py-3" style="flex: 1;">
+                <img src="@/assets/location.svg" height="30" alt="no selected option info">
                 <p class="m-0">No location selected</p>
               </div>
             </div>
@@ -77,15 +88,18 @@ import axios from 'axios';
 
 import FooterSection from '@/components/FooterSection.vue'
 import PresentationSection from '@/components/PresentationSection.vue'
+import PreLoader from '@/components/PreLoader.vue'
 
 import airportInfoApi from '@/services/airports.services.js'
 
+import { airports } from '@/data/airports.js'
 
 export default {
 
   components: {
     FooterSection,
-    PresentationSection
+    PresentationSection,
+    PreLoader
   },
 
   computed: {
@@ -120,212 +134,9 @@ export default {
 
       selectedAirportInfo: '',
 
-      airports: [
-        {
-          "icao": "SPME",
-          airport_name: "Capitan FAP Pedro Canga Rodriguez Airport",
-          latitude: -3.55253005027771,
-          longitud: -80.38140106201172
-        },
-        {
-          "icao": "SPYL",
-          "airport_name": "Capitan Montes Airport",
-          "latitude": -4.5766401290894,
-          "longitud": -81.254096984863
-        },
-        {
-          "icao": "SPUR",
-          "airport_name": "Capitán FAP Guillermo Concha Iberico International Airport",
-          "latitude": -5.20574998856,
-          "longitud": -80.61640167239999
-        },
-        {
-          "icao": "SPJR",
-          "airport_name": "Mayor General FAP Armando Revoredo Iglesias Airport",
-          "latitude": -7.1391801834106445,
-          "longitud": -78.4894027709961
-        },
-        {
-          "icao": "SPHI",
-          "airport_name": "Capitan FAP Jose A Quinones Gonzales International Airport",
-          "latitude": -6.787479877471924,
-          "longitud": -79.8281021118164
-        },
-        {
-          "icao": "SPPY",
-          "airport_name": "Chachapoyas Airport",
-          "latitude": -6.201809883117676,
-          "longitud": -77.8561019897461
-        },
-        {
-          "icao": "SPST",
-          "airport_name": "Cadete FAP Guillermo Del Castillo Paredes Airport",
-          "latitude": -6.508739948272705,
-          "longitud": -76.37319946289062
-        },
-        {
-          "icao": "SPRU",
-          "airport_name": "Capitan FAP Carlos Martinez De Pinillos International Airport",
-          "latitude": -8.08141040802002,
-          "longitud": -79.10880279541016
-        },
-        {
-          "icao": "SPHZ",
-          "airport_name": "Comandante FAP German Arias Graziani Airport",
-          "latitude": -9.347439765930176,
-          "longitud": -77.59839630126953
-        },
-        {
-          "icao": "SPQT",
-          "airport_name": "Coronel FAP Francisco Secada Vignetta International Airport",
-          "latitude": -3.7847399711608887,
-          "longitud": -73.30879974365234
-        },
-        {
-          "icao": "SPCL",
-          "airport_name": "Cap FAP David Abenzur Rengifo International Airport",
-          "latitude": -8.37794017791748,
-          "longitud": -74.57430267333984
-        },
-        {
-          "icao": "SPSO",
-          "airport_name": "Capitán FAP Renán Elías Olivera International Airport",
-          "latitude": -13.74489974975586,
-          "longitud": -76.22029876708984
-        },
-        {
-          "icao": "SPQU",
-          "airport_name": "Rodríguez Ballón International Airport",
-          "latitude": -16.3411006927,
-          "longitud": -71.5830993652
-        },
-        {
-          "icao": "SPHO",
-          "airport_name": "Coronel FAP Alfredo Mendivil Duarte Airport",
-          "latitude": -13.154800415039062,
-          "longitud": -74.20439910888672
-        },
-        {
-          "icao": "SPJL",
-          "airport_name": "Inca Manco Capac International Airport",
-          "latitude": -15.467100143432617,
-          "longitud": -70.158203125
-        },
-        {
-          "icao": "SPTU",
-          "airport_name": "Padre Aldamiz International Airport",
-          "latitude": -12.6135997772,
-          "longitud": -69.2285995483
-        },
-        {
-          "icao": "SPTN",
-          "airport_name": "Coronel FAP Carlos Ciriani Santa Rosa International Airport",
-          "latitude": -18.053300857500002,
-          "longitud": -70.2758026123
-        },
-        {
-          "icao": "SPHY",
-          "airport_name": "Andahuaylas Airport",
-          "latitude": -13.706399917602539,
-          "longitud": -73.35040283203125
-        },
-        {
-          "icao": "SPAY",
-          "airport_name": "Teniente General Gerardo Pérez Pinedo Airport",
-          "latitude": -10.7291,
-          "longitud": -73.766502
-        },
-        {
-          "icao": "SPEO",
-          "airport_name": "Teniente FAP Jaime A De Montreuil Morales Airport",
-          "latitude": -9.149609565734863,
-          "longitud": -78.5238037109375
-        },
-        {
-          "icao": "SPZO",
-          "airport_name": "Alejandro Velasco Astete International Airport",
-          "latitude": -13.535699844400002,
-          "longitud": -71.9387969971
-        },
-        {
-          "icao": "SPNC",
-          "airport_name": "Alferez Fap David Figueroa Fernandini Airport",
-          "latitude": -9.878809928894043,
-          "longitud": -76.20480346679688
-        },
-        {
-          "icao": "SPEQ",
-          "airport_name": "Cesar Torke Podesta Airport",
-          "latitude": -17.179000854492188,
-          "longitud": -70.93080139160156
-        },
-        {
-          "icao": "SPLO",
-          "airport_name": "Ilo Airport",
-          "latitude": -17.69499969482422,
-          "longitud": -71.34400177001953
-        },
-        {
-          "icao": "SPJE",
-          "airport_name": "Shumba Airport",
-          "latitude": -5.59248,
-          "longitud": -78.774002
-        },
-        {
-          "icao": "SPJJ",
-          "airport_name": "Francisco Carle Airport",
-          "latitude": -11.7831001282,
-          "longitud": -75.47339630130001
-        },
-        {
-          "icao": "SPJI",
-          "airport_name": "Juanjui Airport",
-          "latitude": -7.169099807739258,
-          "longitud": -76.72859954833984
-        },
-        {
-          "icao": "SPMF",
-          "airport_name": "Mayor PNP Nancy Flores Paucar Airport",
-          "latitude": -11.3254,
-          "longitud": -74.535598
-        },
-        {
-          "icao": "SPEP",
-          "airport_name": "Puerto Esperanza Airport",
-          "latitude": -9.7681303024292,
-          "longitud": -70.70649719238281
-        },
-        {
-          "icao": "SPJA",
-          "airport_name": "Juan Simons Vela Airport",
-          "latitude": -6.067860126495361,
-          "longitud": -77.16000366210938
-        },
-        {
-          "icao": "SPGM",
-          "airport_name": "Tingo Maria Airport",
-          "latitude": -9.133000373840332,
-          "longitud": -75.94999694824219
-        },
-        {
-          "icao": "SPCH",
-          "airport_name": "Tocache Airport",
-          "latitude": -8.1829996109,
-          "longitud": -76.516998291
-        },
-        {
-          "icao": "SPMS",
-          "airport_name": "Moises Benzaquen Rengifo Airport",
-          "latitude": -5.893770217895508,
-          "longitud": -76.11820220947266
-        },
-        {
-          "icao": "SPIM",
-          "airport_name": "Jorge Chávez International Airport",
-          latitude: -12.0219,
-          longitud: -77.114305
-        },
-      ]
+      airports: airports,
+
+      isLoading: false
     }
   },
 
@@ -341,26 +152,30 @@ export default {
     },
 
     async handleMarkerClick(icao) {
-      //      console.log(process.env.VUE_APP_AIRPORTDB_API_KEY)
-      //, icao
-      // const endpoint = `/${ICAO}?apiToken=${process.AIRPORTDB_API_KEY}`
-      const endpoint = `/${icao}?apiToken=${process.env.VUE_APP_AIRPORTDB_API_KEY}`
+      this.isLoading = true; // Mostrar preloader
 
-      const { data } = await airportInfoApi.get(endpoint)
+      try {
+        const endpoint = `/${icao}?apiToken=${process.env.VUE_APP_AIRPORTDB_API_KEY}`;
+        const { data } = await airportInfoApi.get(endpoint);
 
-      const { municipality, name, latitude_deg, longitude_deg, iso_country, iso_region } = data
+        const { municipality, name, latitude_deg, longitude_deg, iso_country, iso_region } = data;
 
-      this.selectedAirportInfo = {
-        municipality, 
-        name, 
-        latitude_deg, 
-        longitude_deg, 
-        iso_country, 
-        iso_region
+        this.selectedAirportInfo = {
+          municipality,
+          name,
+          latitude_deg,
+          longitude_deg,
+          iso_country,
+          iso_region
+        };
+        this.refreshMap();
+      } catch (error) {
+        console.error('Error loading airport info:', error);
+      } finally {
+        this.isLoading = false; // Ocultar preloader
       }
-      this.refreshMap()
-
     },
+
 
     disableScroll(event) {
       // Previene el evento de desplazamiento cuando el mouse está sobre el mapa
@@ -414,9 +229,15 @@ export default {
 }
 
 .card-info {
-  background: lightgreen;
+  background: #f5f5dc;
   border-radius: 7px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.airport-info {
+  font-size: small;
   display: flex;
   flex-direction: column;
 }
