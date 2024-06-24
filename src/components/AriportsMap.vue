@@ -1,12 +1,27 @@
 <template>
   <div>
     <PreLoader :isLoading="isLoading"></PreLoader>
-    <PresentationSection />
+    <HeaderSection />
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6 col-sm-12 mb-3">
           <div class="card-map">
-            <h3 class="text-center">AIRPORT MAP</h3>
+            <div class="d-flex align-items-center">
+              <div class="col-4 d-flex justify-content-start">
+                <img src="@/assets/peru_flag.svg" class="m-1" style="width: 30px;" alt="">
+              </div>
+              <div class="col-8 d-flex align-items-center justify-content-start">
+                <h5 class="text-center m-0">AIRPORT MAP</h5>
+              </div>
+              <!-- <div class="col">
+                 <label for="">legend: </label>
+                <i class="bi bi-square-fill" style="color: pink">legend</i>
+                <i class="bi bi-square-fill" style="color: blue">some</i>
+                <i class="bi bi-square-fill" style="color: yellow">some</i>
+                <i class="bi bi-square-fill" style="color: green">some</i>
+              </div> -->
+            </div>
+
             <div class="map-content">
               <l-map :options="mapOptions" :zoom="zoom" :center="[latitude, longitud]">
                 <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
@@ -23,7 +38,7 @@
             <div style="flex: 1; display: flex;">
               <div v-if="selectedAirportInfo" style="flex: 1; display: flex; flex-direction: column;">
                 <div class="map-details">
-                  <l-map :key="mapKey" :options="mapOptions" :zoom="15"
+                  <l-map style="height: 20%; width: 100%" :key="mapKey" :options="mapOptions" :zoom="15"
                     :center="[selectedAirportInfo.latitude_deg, selectedAirportInfo.longitude_deg]">
                     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
                   </l-map>
@@ -51,7 +66,7 @@
 <script>
 
 import FooterSection from '@/components/FooterSection.vue'
-import PresentationSection from '@/components/PresentationSection.vue'
+import HeaderSection from '@/components/HeaderSection.vue'
 import PreLoader from '@/components/PreLoader.vue'
 import CardInformation from '@/components/CardInformation.vue'
 
@@ -63,7 +78,7 @@ export default {
 
   components: {
     FooterSection,
-    PresentationSection,
+    HeaderSection,
     PreLoader,
     CardInformation,
   },
@@ -102,7 +117,8 @@ export default {
 
       airports: airports,
 
-      isLoading: false
+      isLoading: false,
+
     }
   },
 
@@ -167,7 +183,7 @@ export default {
 <style scoped>
 .map-content {
   background: #b7bac1;
-  border-radius: 17px;
+  border-radius: 10px;
   height: 500px;
 }
 
@@ -175,6 +191,7 @@ export default {
   border: 0px;
   border-radius: 7px;
   height: auto;
+  overflow: hidden;
   background: #F4F1E9;
 }
 
@@ -193,25 +210,29 @@ export default {
 }
 
 .map-details {
-  flex: 1;
-  height: 50%; 
+  /* flex: 1; */
   background-color: #e0e0e0;
   border-radius: 10px;
   overflow: hidden;
+  height: 50%;
 }
 
 /* Adaptaciones para móviles y tablets */
 @media (max-width: 768px) {
-  .card-map, .card-info {
+
+  .card-map,
+  .card-info {
     margin-bottom: 20px;
   }
 
   .map-content {
-    height: 500px; /* Ajusta la altura para dispositivos móviles */
+    height: 500px;
+    /* Ajusta la altura para dispositivos móviles */
   }
 
   .map-details {
-    height: 500px; /* Ajusta la altura para dispositivos móviles */
+    height: 200px;
+    /* Ajusta la altura para dispositivos móviles */
   }
 }
 </style>
