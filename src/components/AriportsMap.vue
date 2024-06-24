@@ -13,13 +13,7 @@
               <div class="col-8 d-flex align-items-center justify-content-start">
                 <h5 class="text-center m-0">AIRPORT MAP</h5>
               </div>
-              <!-- <div class="col">
-                 <label for="">legend: </label>
-                <i class="bi bi-square-fill" style="color: pink">legend</i>
-                <i class="bi bi-square-fill" style="color: blue">some</i>
-                <i class="bi bi-square-fill" style="color: yellow">some</i>
-                <i class="bi bi-square-fill" style="color: green">some</i>
-              </div> -->
+              
             </div>
 
             <div class="map-content">

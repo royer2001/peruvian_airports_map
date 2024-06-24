@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="d-grid gap-2 d-md-block m-2">
-            <button class="btn btn-outline-success" type="button"><i class="bi bi-map"></i> VIEW IN MAPS</button>
+            <button @click="openInGoogleMaps" class="btn btn-outline-success" type="button"><i class="bi bi-map"></i> VIEW IN GOOGLE MAPS</button>
         </div>
     </div>
 </template>
@@ -63,7 +63,21 @@ export default {
             type: Object,
             default: () => { }
         }
+    },
+    methods:{
+        openInGoogleMaps(){
+
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+
+            const {latitude_deg, longitude_deg} = this.selectedAirport
+            const baseUrl = isMobile ? `geo:${latitude_deg},${longitude_deg},` : `https://www.google.com/maps/search/?api=1&query=${latitude_deg},${longitude_deg}`
+
+            window.open(baseUrl, '_blank')
+        }
     }
+
+
 }
 </script>
 
