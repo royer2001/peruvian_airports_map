@@ -1,7 +1,8 @@
 <template>
-    <div class="mb-2 p-5 bg-info text-white rounded">
-        <h1>{{ headerPresentation.title }}</h1>
-        <p>{{ headerPresentation.description }}</p>
+    <div class="jumbotron-image p-5 mb-4 bg-info text-white"
+        v-bind:style="bgHeader">
+        <h1 class="mb-4">{{ headerPresentation.title }}</h1>
+        <p class="mb-4">{{ headerPresentation.description }}</p>
     </div>
 </template>
 
@@ -12,10 +13,26 @@ export default {
         return {
             headerPresentation: {
                 title: 'PERUVIAN AIRPORTS',
-                description: 'Learn about Peru airports.',
+                description: 'Know the main airports in Peru.',
             },
         }
+    },
+
+    computed: {
+        bgHeader() {
+            return {
+                backgroundImage: `url(${require('../assets/bg_header.jpg')})`
+            };
+        }
     }
+
 }
 
 </script>
+<style scoped>
+.jumbotron-image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+</style>

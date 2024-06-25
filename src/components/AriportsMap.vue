@@ -3,8 +3,8 @@
     <PreLoader :isLoading="isLoading"></PreLoader>
     <HeaderSection />
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 col-sm-12 mb-3">
+      <div class="row mb-4">
+        <div class="col-md-6 col-sm-12">
           <div class="card-map">
             <div class="d-flex align-items-center">
               <div class="col-4 d-flex justify-content-start">
@@ -13,7 +13,7 @@
               <div class="col-8 d-flex align-items-center justify-content-start">
                 <h5 class="text-center m-0">AIRPORT MAP</h5>
               </div>
-              
+
             </div>
 
             <div class="map-content">
@@ -50,9 +50,9 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    
       <FooterSection />
-    </div>
+
   </div>
 </template>
 
@@ -186,7 +186,9 @@ export default {
   border-radius: 7px;
   height: auto;
   overflow: hidden;
-  background: #F4F1E9;
+  background: #f5f5dc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+
 }
 
 .card-info {
@@ -195,6 +197,8 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+
 }
 
 .airport-info {
