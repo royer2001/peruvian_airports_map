@@ -1,28 +1,55 @@
 <template>
-    <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 border-top">
+    <footer class="bg-light border-top mt-5">
+        <b-container class="py-4">
+            <b-row class="align-items-center">
+                <b-col md="6" class="text-center text-md-start mb-3 mb-md-0">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <img src="@/assets/peru_flag.svg" style="width: 24px;" class="me-2" alt="Peru Flag">
+                        <span class="text-muted fw-semibold">Peruvian Airports Map</span>
+                    </div>
+                </b-col>
 
-        <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-        </ul>
+                <b-col md="6" class="text-center text-md-end">
+                    <small class="text-muted">
+                        &copy; {{ currentYear }} - Explore Peru's Aviation Network
+                    </small>
+                </b-col>
+            </b-row>
 
-        <p class="col-md-4 m-0 text-muted text-end">&copy; 2024 Company, Inc</p>
+            <b-row class="mt-3">
+                <b-col class="text-center">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Data provided by <a href="https://airportdb.io" target="_blank"
+                            class="text-decoration-none">AirportDB</a>
+                    </small>
+                </b-col>
+            </b-row>
+        </b-container>
     </footer>
 </template>
 
 <script>
-
 export default {
-
-    data() {
-        return {
-            title: 'some title'
+    computed: {
+        currentYear() {
+            return new Date().getFullYear()
         }
     }
+}
+</script>
 
+<style scoped>
+footer {
+    margin-top: auto;
 }
 
-</script>
+footer a {
+    color: #6c757d;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #495057;
+}
+</style>

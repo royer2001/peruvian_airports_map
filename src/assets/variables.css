@@ -1,0 +1,229 @@
+/**
+ * Sistema de Diseño - Peruvian Airports Flight Tracker
+ * Variables CSS unificadas para estados, colores y tipografía
+ */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════
+     PALETA DE COLORES PRINCIPAL
+     ═══════════════════════════════════════════════════════════ */
+  
+  /* Colores base */
+  --color-bg-primary: #0f0f23;
+  --color-bg-secondary: #1a1a2e;
+  --color-bg-tertiary: #16213e;
+  --color-bg-card: rgba(255, 255, 255, 0.03);
+  
+  /* Texto */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e0e0e0;
+  --color-text-muted: #888888;
+  --color-text-disabled: #555555;
+  
+  /* Bordes */
+  --color-border-default: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(255, 255, 255, 0.2);
+  --color-border-focus: #4a90d9;
+
+  /* ═══════════════════════════════════════════════════════════
+     COLORES SEMÁNTICOS - ESTADOS DE VUELO
+     ═══════════════════════════════════════════════════════════ */
+  
+  /* ✅ En vuelo / Activo */
+  --status-active: #27ae60;
+  --status-active-bg: rgba(39, 174, 96, 0.15);
+  --status-active-gradient: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  
+  /* ✅ Aterrizado / Despegado */
+  --status-landed: #2ecc71;
+  --status-landed-bg: rgba(46, 204, 113, 0.15);
+  --status-landed-gradient: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  
+  /* 📅 Programado / A tiempo */
+  --status-scheduled: #3498db;
+  --status-scheduled-bg: rgba(52, 152, 219, 0.15);
+  --status-scheduled-gradient: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  
+  /* ⚠️ Retrasado */
+  --status-delayed: #f39c12;
+  --status-delayed-bg: rgba(243, 156, 18, 0.15);
+  --status-delayed-gradient: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  
+  /* ❌ Cancelado */
+  --status-cancelled: #e74c3c;
+  --status-cancelled-bg: rgba(231, 76, 60, 0.15);
+  --status-cancelled-gradient: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  
+  /* ↩️ Desviado */
+  --status-diverted: #9b59b6;
+  --status-diverted-bg: rgba(155, 89, 182, 0.15);
+  --status-diverted-gradient: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+
+  /* ═══════════════════════════════════════════════════════════
+     COLORES DE TIPO DE VUELO
+     ═══════════════════════════════════════════════════════════ */
+  
+  /* ↓ Llegadas - Azul (destino, aterrizaje) */
+  --type-arrival: #3498db;
+  --type-arrival-bg: rgba(52, 152, 219, 0.1);
+  --type-arrival-border: rgba(52, 152, 219, 0.3);
+  --type-arrival-gradient: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  
+  /* ↑ Salidas - Naranja (despegue, energía) */
+  --type-departure: #e67e22;
+  --type-departure-bg: rgba(230, 126, 34, 0.1);
+  --type-departure-border: rgba(230, 126, 34, 0.3);
+  --type-departure-gradient: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+
+  /* ═══════════════════════════════════════════════════════════
+     INFORMACIÓN GENERAL
+     ═══════════════════════════════════════════════════════════ */
+  
+  --color-info: #3498db;
+  --color-info-bg: rgba(52, 152, 219, 0.1);
+  
+  --color-success: #27ae60;
+  --color-success-bg: rgba(39, 174, 96, 0.1);
+  
+  --color-warning: #f39c12;
+  --color-warning-bg: rgba(243, 156, 18, 0.1);
+  
+  --color-danger: #e74c3c;
+  --color-danger-bg: rgba(231, 76, 60, 0.1);
+
+  /* ═══════════════════════════════════════════════════════════
+     TIPOGRAFÍA
+     ═══════════════════════════════════════════════════════════ */
+  
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  
+  /* Tamaños de fuente */
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.8rem;
+  --font-size-base: 0.9rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.1rem;
+  --font-size-xl: 1.4rem;
+  --font-size-2xl: 1.8rem;
+  
+  /* Pesos */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ═══════════════════════════════════════════════════════════
+     ESPACIADO
+     ═══════════════════════════════════════════════════════════ */
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+
+  /* ═══════════════════════════════════════════════════════════
+     BORDES Y SOMBRAS
+     ═══════════════════════════════════════════════════════════ */
+  
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 20px rgba(74, 144, 217, 0.3);
+
+  /* ═══════════════════════════════════════════════════════════
+     TRANSICIONES
+     ═══════════════════════════════════════════════════════════ */
+  
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* ═══════════════════════════════════════════════════════════
+     ANIMACIONES
+     ═══════════════════════════════════════════════════════════ */
+  
+  --animation-pulse: pulse 2s infinite;
+  --animation-spin: spin 1s linear infinite;
+  --animation-highlight: highlight-change 3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYFRAMES GLOBALES
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+    box-shadow: 0 0 0 6px rgba(39, 174, 96, 0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes highlight-change {
+  0%, 100% { background: var(--color-bg-card); }
+  10% { background: rgba(52, 152, 219, 0.2); }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MEDIA QUERIES - MODO REDUCIDO DE MOVIMIENTO
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODO KIOSKO - PANTALLAS GRANDES (≥1400px)
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 1400px) {
+  :root {
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.6rem;
+    --font-size-2xl: 2rem;
+    --spacing-lg: 20px;
+    --spacing-xl: 28px;
+  }
+}

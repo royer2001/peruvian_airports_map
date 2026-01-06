@@ -16,31 +16,34 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .preloader {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    height: 50px;
+    width: 100vw;
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #333;
+    background: rgba(0, 0, 0, 0.7);
+    /* Fondo semi-transparente */
+    backdrop-filter: blur(5px);
+    /* Efecto de desenfoque */
     color: #fff;
     font-size: 1.5em;
-    z-index: 1000;
+    z-index: 9999;
 }
 
 .loading-circle {
-    border: 4px solid #f3f3f3;
+    border: 4px solid rgba(255, 255, 255, 0.3);
     border-top: 4px solid #3498db;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     animation: spin 1s linear infinite;
-    margin-right: 10px;
-    /* Espacio entre el círculo y el texto */
+    margin-bottom: 20px;
 }
 
 @keyframes spin {

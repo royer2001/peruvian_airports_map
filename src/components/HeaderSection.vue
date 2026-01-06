@@ -1,12 +1,12 @@
 <template>
-    <div class="jumbotron-image p-5 mb-4 bg-info text-white"
-        v-bind:style="bgHeader">
+    <div class="jumbotron-image p-5 mb-4 bg-info text-white" v-bind:style="bgHeader">
         <h1 class="mb-4">{{ headerPresentation.title }}</h1>
         <p class="mb-4">{{ headerPresentation.description }}</p>
     </div>
 </template>
 
 <script>
+import bgHeaderImg from '../assets/bg_header.jpg'
 
 export default {
     data() {
@@ -21,13 +21,11 @@ export default {
     computed: {
         bgHeader() {
             return {
-                backgroundImage: `url(${require('../assets/bg_header.jpg')})`
+                backgroundImage: `url(${bgHeaderImg})`
             };
         }
     }
-
 }
-
 </script>
 <style scoped>
 .jumbotron-image {

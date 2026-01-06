@@ -1,18 +1,20 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+
+// Design System Variables
+import '@/assets/variables.css'
+
+// Bootstrap and Icons
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+// Leaflet
+import "leaflet/dist/leaflet.css";
 
-// Importa también Vue3-Leaflet
-import * as Vue3Leaflet from 'vue3-leaflet';
+// BootstrapVueNext
+import { createBootstrap } from 'bootstrap-vue-next/plugins/createBootstrap'
 
 const app = createApp(App);
-
-// Registra todos los componentes de Vue3-Leaflet globalmente
-for (const componentKey in Vue3Leaflet) {
-  app.component(componentKey, Vue3Leaflet[componentKey]);
-}
-
+app.use(createBootstrap())
 app.mount('#app');
