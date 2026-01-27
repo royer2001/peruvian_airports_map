@@ -488,11 +488,22 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
-  background: linear-gradient(135deg, var(--color-bg-secondary, #1a1a2e) 0%, var(--color-bg-tertiary, #16213e) 100%);
+  height: 80px;
+  /* Altura fija para el navbar */
+  padding: 0 24px;
+  background-image:
+    linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.85) 100%),
+    url('@/assets/bg_header.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-bottom: 1px solid var(--color-border-default, rgba(255, 255, 255, 0.1));
-  flex-wrap: wrap;
   gap: 16px;
+  position: relative;
+  overflow: hidden;
+  /* Asegura que nada sobresalga */
+  flex-shrink: 0;
+  /* Evita que se contraiga en el layout flex */
 }
 
 .header-left {
@@ -995,6 +1006,8 @@ export default {
 
 @media (max-width: 768px) {
   .dashboard-header {
+    height: auto;
+    min-height: 60px;
     padding: 12px 16px;
   }
 

@@ -72,7 +72,7 @@
                                 <l-map v-if="airport?.latitude_deg && airport?.longitude_deg"
                                     style="height: 100%; width: 100%"
                                     :options="{ zoomControl: false, dragging: false, scrollWheelZoom: false }"
-                                    :zoom="12" :center="[airport.latitude_deg, airport.longitude_deg]">
+                                    :zoom="15" :center="[airport.latitude_deg, airport.longitude_deg]">
                                     <l-tile-layer
                                         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"></l-tile-layer>
                                     <l-marker :lat-lng="[airport.latitude_deg, airport.longitude_deg]">
